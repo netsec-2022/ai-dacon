@@ -5,6 +5,7 @@ import numpy as np
 
 from sklearn.linear_model import LinearRegression
 from sklearn.multioutput import MultiOutputRegressor
+from sklearn.svm import SVR
 
 def seed_everything(seed):
     random.seed(seed)
@@ -17,6 +18,7 @@ train_df = pd.read_csv('./dataset/train.csv')
 train_x = train_df.filter(regex='X') # Input : X Featrue
 train_y = train_df.filter(regex='Y') # Output : Y Feature
 
+# SVR = MultiOutputRegressor(SVR(), n_jobs=-1).fit(train_x, train_y) SVR을 이용한 Regression
 LR = MultiOutputRegressor(LinearRegression()).fit(train_x, train_y)
 print('Done.')
 
