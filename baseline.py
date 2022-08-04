@@ -2,6 +2,7 @@ import pandas as pd
 import random
 import os
 import numpy as np
+import xgboost as xgb
 
 from sklearn.linear_model import LinearRegression
 from sklearn.multioutput import MultiOutputRegressor
@@ -19,13 +20,14 @@ train_x = train_df.filter(regex='X') # Input : X Featrue
 train_y = train_df.filter(regex='Y') # Output : Y Feature
 
 #SVR = MultiOutputRegressor(SVR(), n_jobs=-1).fit(train_x, train_y) SVR을 이용한 Regression
-LSVR = MultiOutputRegressor(LinearSVR(), n_jobs=-1).fit(train_x, train_y)
+#LSVR = MultiOutputRegressor(LinearSVR(), n_jobs=-1).fit(train_x, train_y)
 #LR = MultiOutputRegressor(LinearRegression()).fit(train_x, train_y)
+XGB = MultiOutputRegressor(xgb.XGBRegressor(n_estimators=100, learning_rate=0.08, gamma = 0, subsample=0.75, colsample_bytree = 1, max_depth=7) ).fit(train_x, train_y)
 print('Done.')
 
 test_x = pd.read_csv('./dataset/test.csv').drop(columns=['ID'])
 
-preds = LSVR.predict(test_x)
+preds = XGB.predict(test_x)
 print('Done.')
 
 submit = pd.read_csv('./dataset/sample_submission.csv')
@@ -36,4 +38,4 @@ for idx, col in enumerate(submit.columns):
     submit[col] = preds[:,idx-1]
 print('Done.')
 
-submit.to_csv('./dataset/submit_lsvr.csv', index=False)
+submit.to_csv('./dataset/submit_xgb.csv', index=False)
