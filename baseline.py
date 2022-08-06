@@ -22,8 +22,8 @@ train_y = train_df.filter(regex='Y') # Output : Y Feature
 #SVR = MultiOutputRegressor(SVR(), n_jobs=-1).fit(train_x, train_y) SVR을 이용한 Regression
 #LSVR = MultiOutputRegressor(LinearSVR(), n_jobs=-1).fit(train_x, train_y)
 #LR = MultiOutputRegressor(LinearRegression()).fit(train_x, train_y)
-#XGB = MultiOutputRegressor(xgb.XGBRegressor(n_estimators=100, learning_rate=0.08, gamma = 0, subsample=0.75, colsample_bytree = 1, max_depth=7) ).fit(train_x, train_y)
-XGB = MultiOutputRegressor(xgb.XGBRegressor(n_estimators=150, learning_rate=0.07, gamma = 0, subsample=0.77, colsample_bytree = 1, max_depth=7) ).fit(train_x, train_y)
+#XGB = MultiOutputRegressor(xgb.XGBRegressor(n_estimators=150, learning_rate=0.07, gamma = 0, subsample=0.77, colsample_bytree = 1, max_depth=7) ).fit(train_x, train_y) 
+XGB = MultiOutputRegressor(xgb.XGBRegressor(n_estimators=175, learning_rate=0.65, gamma = 0, subsample=0.79, colsample_bytree = 1, max_depth=7) ).fit(train_x, train_y) 
 
 print('Done.')
 
@@ -31,6 +31,7 @@ test_x = pd.read_csv('./dataset/test.csv').drop(columns=['ID'])
 
 preds = XGB.predict(test_x)
 print('Done.')
+print("predict :", preds)
 
 submit = pd.read_csv('./dataset/sample_submission.csv')
 
@@ -40,4 +41,4 @@ for idx, col in enumerate(submit.columns):
     submit[col] = preds[:,idx-1]
 print('Done.')
 
-submit.to_csv('./dataset/submit_xgb_3.csv', index=False)
+submit.to_csv('./dataset/submit_xgb_4.csv', index=False)
