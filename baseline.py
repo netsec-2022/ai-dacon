@@ -31,7 +31,6 @@ test_x = pd.read_csv('./dataset/test.csv').drop(columns=['ID'])
 
 preds = XGB.predict(test_x)
 print('Done.')
-print("predict :", preds)
 
 submit = pd.read_csv('./dataset/sample_submission.csv')
 
