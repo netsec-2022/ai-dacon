@@ -40,4 +40,4 @@ for idx, col in enumerate(submit.columns):
     submit[col] = preds[:,idx-1]
 print('Done.')
 
-submit.to_csv('./dataset/submit_xgb_2.csv', index=False)
+submit.to_csv('./dataset/submit_xgb_3.csv', index=False)
